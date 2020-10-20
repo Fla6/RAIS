@@ -1,49 +1,98 @@
+body {
+    background-image: url(blog-background.jpg);
+    background-size: 100%;
+}
+
+footer {
+    /* background-color: deeppink; */
+    text-align: center;
+}
+
+#nav {
+    background-color: lightgrey;
+}
+
 #ver {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: darkred;
+    /* background-color: darkred; */
+    color: gold;
     height: 100px;
     font-size: 36pt;
-    color: gold;
+    
+}
+
+.modal-content {
+    background-color: bisque;
 }
 
 #blog {
-    text-align: center;
-    background-color: darkgreen;
+    text-align: right;
+    /* background-color: darkgreen; */
+    color: darkred;
+    border-right: 1px solid slateblue;
+    
+    
+}
+
+.main-section {
+    background-color: tan;
+}
+
+#blog input {
+    margin-top: 20px;
+    margin-right: 30px;
 }
 
 #tags {
     text-align: center;
-    background-color: darkkhaki;
+    /* background-color: darkkhaki; */
 }
 
 #tagfot {
     text-align: center;
-    background-color: darkorange;
-    min-height: 370px;
+    /* background-color: darkorange; */
+    min-height: 380px;
 }
 
-#prof {
-    background-color: gold;
-    margin-top: 150px;
-    min-height: 300px;
-    border-radius: 8px;
-    
 
+#prof {
+    background-color: lightgray;
+    margin-top: 150px;
+    border-radius: 8px;
 }
 
 
 #phot {
-    background-color: aqua;
+    /* background-color: aqua; */
     margin-top: 20px;
-    margin-bottom: 30px;
+    text-align: left;
     
+
 }
 
 #name {
-    background-color: blue;
+    /* background-color: blue; */
     margin-top: 20px;
-    margin-bottom: 30px;
+    text-align: center;
+    padding-left: 80px;
+
     
+}
+
+#info {
+    /* background-color: lime; */
+    text-align: left;
+    padding-left: 80px;
+    padding-top: 15px;
+
+}
+
+
+
+#name-post {
+    text-align: left;
+    padding-left: 90px;
+    padding-top: 15px;
 }
 
 .profile-head h5 {
@@ -51,16 +100,22 @@
     font-size: 24px;
 }
 
-.profile-edit-btn {
-    margin-top: 20px;
+#btn {
+    text-align: center;
+    padding-left: 30px;
+    padding-top: 15px;
 }
 
-#prof-info {
-    background-color: chartreuse;
-    /* margin-bottom: 50px;
-    margin-top: 50px;
-    height: 60px;
-    margin-left: 1px;
-    margin-right: 1px; */
-    
+.profile-edit-btn {
+    border-radius: 20px;
+    margin-top: 20px;
+    border: none;
+    width: 50%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+
 }
+
+
