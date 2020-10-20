@@ -1,0 +1,66 @@
+#ver {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: darkred;
+    height: 100px;
+    font-size: 36pt;
+    color: gold;
+}
+
+#blog {
+    text-align: center;
+    background-color: darkgreen;
+}
+
+#tags {
+    text-align: center;
+    background-color: darkkhaki;
+}
+
+#tagfot {
+    text-align: center;
+    background-color: darkorange;
+    min-height: 370px;
+}
+
+#prof {
+    background-color: gold;
+    margin-top: 150px;
+    min-height: 300px;
+    border-radius: 8px;
+    
+
+}
+
+
+#phot {
+    background-color: aqua;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    
+}
+
+#name {
+    background-color: blue;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    
+}
+
+.profile-head h5 {
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.profile-edit-btn {
+    margin-top: 20px;
+}
+
+#prof-info {
+    background-color: chartreuse;
+    /* margin-bottom: 50px;
+    margin-top: 50px;
+    height: 60px;
+    margin-left: 1px;
+    margin-right: 1px; */
+    
+}
