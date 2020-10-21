@@ -5,3 +5,12 @@ from django.http import HttpResponse
 
 def index(request):
     return render(request=request, template_name='rais/home.html')
+
+def aboutus(request):
+    return render(request=request, template_name='rais/aboutus.html')
+
+def home1(request):
+    return render(request=request, template_name='rais/home1.html')
+
+def profile(request):
+    return render(request=request, template_name='rais/profile.html')

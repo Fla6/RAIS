@@ -28,13 +28,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a href="{% static "rais/home.html" %}" class="nav-link">Home</a>
+                    <a href="{% url 'index' %}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" data-toggle="modal" data-target="#exampleModal">Log in</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% static "rais/aboutus.html" %}" class="nav-link">About us</a>
+                    <a href="{% url 'aboutus' %}" class="nav-link">About us</a>
                 </li>
             </ul>
             <form class="from-inline my-2 my-lg-0">
@@ -74,7 +74,7 @@
                         <div class="tab-pane fade in show active" role="tabpanel" id="panel7">
                             <div class="modal-body">
                                 <div class="container-fluid">
-                                    <form id="reg" action="{% static "rais/home1.html" %}">
+                                    <form id="reg" action="{% url 'home1' %}">
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group">
