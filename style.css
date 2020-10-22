@@ -1,4 +1,4 @@
-body {
+/* body {
     background-image: url(blog-background.jpg);
     height: 100%;
     margin: 0;
@@ -7,23 +7,49 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 
+} */
+
+body {
+    background-color: floralwhite;
+}
+
+header {
+    display: block;
+}
+
+
+.post {
+    border-bottom: 1px solid #acbace;
+    padding-bottom: 10px;
+    margin: 0px 20px 20px 10px;
+}
+
+.navigation {
+    background-color: #ffdb99;
+    border-top: 2px solid #acbace;
+    padding-right: 25px;
+}
+
+#crt-btn {
+    font-size: 20px;
+    margin-left: 680px;
 }
 
 footer {
-    /* background-color: deeppink; */
+    background-color: #ffdb99;
     text-align: center;
-}
-
-#nav {
-    background-color: lightgrey;
 }
 
 #ver {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    /* background-color: darkred; */
-    color: gold;
+    background-color: #ffdb99;
+    color: rebeccapurple;
     height: 100px;
     font-size: 36pt;
+}
+
+[role=main] {
+    min-height: 750px;
     
 }
 
@@ -37,12 +63,18 @@ footer {
 }
 
 #blog {
-    text-align: right;
+    
     /* background-color: darkgreen; */
     color: darkred;
     border-right: 1px solid slateblue;
     
     
+}
+
+.featured-wrap {
+    float: left;
+    margin-right: 20px;
+    max-width: 150px;
 }
 
 .main-section {
@@ -54,17 +86,23 @@ footer {
     margin-right: 30px;
 }
 
-#tags {
-    text-align: center;
-    /* background-color: darkkhaki; */
+#taghead {
+    min-height: 370px;
 }
 
 #tagfot {
-    text-align: center;
+    
     /* background-color: darkorange; */
     min-height: 380px;
 }
 
+h6 {
+    margin: 8px;
+    text-align: left;
+    border-bottom: 1px solid lawngreen;
+    padding-bottom: 20px;
+    font-size: 36px;
+}
 
 #prof {
     background-color: lightgray;
