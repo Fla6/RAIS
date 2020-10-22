@@ -10,44 +10,49 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
 <body id="bod">
-    <header id="ver" class="navbar navbar-default container-fluid nav justify-content-center">Name of site</header>
+    <header id="ver" class="navbar navbar-default container-fluid nav justify-content-center">RaisBlog</header>
 
     <!----------------------------------------------------------------------- Navbar -------------------------------------------------------------------------------->
-    <nav class="navbar navbar-expand-lg navbar-light" id="nav">
-        <a href="#" class="navbar-brand"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-         aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a href="home.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="home.html" class="nav-link">Log out</a>
-                </li>
-                <li class="nav-item">
-                    <a href="aboutus.html" class="nav-link">About us</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">Profile <img src="avatar.png" alt="avatar" class="rounded-circle img-responsive"></a>
-                </li>
-            </ul>
-            <form class="from-inline my-2 my-lg-0">
-                <input type="text" class="from-control mr-sm-2" placeholder="Search"
-                aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
-            </form>
-        </div>
-    </nav>
+    <section class="navigation">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container" id="nav">
+                <a href="#" class="navbar-brand"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a href="home.html" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="home.html" class="nav-link">Log out</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="aboutus.html" class="nav-link">About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">Profile <img src="avatar.png" alt="avatar" class="rounded-circle img-responsive"></a>
+                        </li>
+                    </ul>
+                    <form class="from-inline my-2 my-lg-0">
+                        <input type="text" class="from-control mr-sm-2" placeholder="Search"
+                        aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </section>
+    
     <!------------------------------------------------------------------ Navbar (End) -------------------------------------------------------------------------------->
 
-    <main role="main" class="container-fluid">
+    <section role="main" class="container">
         <div class="row" style="min-height: 750px;">
-            <div id="blog" class="col-9">
+            <div id="blog" class="col-10">
                 <form id="frm">
                     <div class="container" id="prof">
                         <div class="row">
@@ -134,15 +139,21 @@
                     </div>
                 </form>
             </div>
-            <div id="tags" class="col-3">
+            <div id="tags" class="col-2">
                 <div class="row">
-                    <div class="col" style="min-height: 370px;">Tags</div>
+                    <div class="col" id="taghead">
+                        <h5 style="text-align: center;">Популярные тэги</h5>
+                        <input type="submit" value="#Hes">
+                    </div>
                     <div class="w-100"></div>
-                    <div class="col" id="tagfot">Information</div>
+                    <div class="col" id="tagfot">
+                        <h5>Archive</h5>
+                        <a href="#">June 2019</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
     
 
     <footer class="footer fixed-bottom">End</footer>
@@ -152,16 +163,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-<!-- 
-<div class="row">
-    <div class="col-10" id="name">sd
-        
-    </div>
-    <div class="col-2" id="phot">sd
-        
-    </div>
-    
-</div>          -->
