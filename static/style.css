@@ -24,6 +24,11 @@ header {
     margin: 0px 20px 20px 10px;
 }
 
+.post:nth-child(1) {
+    padding: 0px;
+    border-bottom: none;
+}
+
 .navigation {
     background-color: #ffdb99;
     border-top: 2px solid #acbace;
@@ -88,11 +93,13 @@ footer {
 
 #taghead {
     min-height: 370px;
+    padding-top: 20px;
 }
 
 #tagfot {
     
     /* background-color: darkorange; */
+    padding-top: 20px;
     min-height: 380px;
 }
 
@@ -102,6 +109,21 @@ h6 {
     border-bottom: 1px solid lawngreen;
     padding-bottom: 20px;
     font-size: 36px;
+}
+
+h2 {
+    text-align: center;
+    padding: 20px 0px 10px 0px;
+    border-bottom: 1px solid firebrick;
+    margin-bottom: 30px;
+}
+
+h1 {
+    padding: 20px 0px 10px 0px;
+}
+
+.devel {
+    margin-left: 20px;
 }
 
 #prof {
@@ -140,7 +162,7 @@ h6 {
 
 #name-post {
     text-align: left;
-    padding-left: 90px;
+    padding-left: 95px;
     padding-top: 15px;
 }
 
