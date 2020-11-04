@@ -4,8 +4,12 @@ from .import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('', views.aboutus, name='aboutus'),
-    path('', views.home1, name='home1'),
-    path('', views.profile, name='profile'),
+    path('aboutus/', views.aboutus, name='aboutus'),
+    path('home1/', views.home1, name='home1'),
+    path('profile/', views.profile, name='profile'),
+    path('login/', views.login, name='login'),
+    path('whats-in-your-mind/', views.whatsinyourmind, name='whats-in-your-mind'),
+    path('post/', views.post, name='post'),
+
 ]
 
