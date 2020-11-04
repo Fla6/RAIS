@@ -25,7 +25,7 @@ SECRET_KEY = 'w%a=aaf623+sio$r3336lbu7c8tm^w25(qa0@%)o#qt=*tx*ne'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['7263.isib.tusur.ru']
 
 
 # Application definition
