@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -27,11 +28,17 @@ def profile(request):
 
 @csrf_exempt
 def login(request):
+    print(request.body)
     return render(request=request, template_name='rais/login.html')
 
 
 def whatsinyourmind(request):
     return render(request=request, template_name='rais/whats-in-your-mind.html')
 
+
 def post(request):
     return render(request=request, template_name='rais/post.html')
+
+
+def edit(request):
+    return render(request=request, template_name='rais/edit.html')
