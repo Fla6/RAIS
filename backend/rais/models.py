@@ -13,3 +13,4 @@ class User(models.Model):
     phone = models.CharField(max_length=12)
     email = models.CharField(max_length=100, primary_key=True)
     password = models.CharField(max_length=100)
+    token = models.CharField(max_length=500)

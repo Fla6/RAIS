@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from rais.models import User
 import datetime
+import os
+import base64
 
 
 # Create your views here.
@@ -16,7 +18,7 @@ def index(request):
 
 
 def aboutus(request):
-    print('aboutus')
+    print(request.COOKIES['token'])
     return render(request=request, template_name='rais/aboutus.html')
 
 
@@ -25,13 +27,36 @@ def home1(request):
 
 
 def profile(request):
-    return render(request=request, template_name='rais/profile.html')
+    if len(request.COOKIES['token']) != 0:
+        user = None
+        try:
+            user = User.objects.get(token=request.COOKIES['token'])
+        except User.DoesNotExist:
+            render(request=request, template_name='rais/login.html')
+        else:
+            context = {
+                'name': user.name + ' ' + user.surname,
+                'birthdate': user.birthdate,
+                'town': user.town,
+                'country': user.country,
+                'phone': user.phone,
+                'email': user.email
+            }
+
+            return render(request=request, context=context, template_name='rais/profile.html')
+
+    else:
+        render(request=request, template_name='rais/login.html')
 
 
 @csrf_exempt
 def login(request):
     # Если регистрируется новый пользователь
     if len(request.POST) == 10:
+
+        # Генерируем уникальный токен пользователя
+        token = base64.b64encode(os.urandom(256)).decode('utf-8')
+
         user = User(name=request.POST['name'],
                     surname=request.POST['surname'],
                     username=request.POST['username'],
@@ -40,10 +65,18 @@ def login(request):
                     birthdate=datetime.datetime.strptime(request.POST['birthdate'], '%Y-%m-%d').date(),
                     phone=request.POST['phone'],
                     email=request.POST['email'],
-                    password=request.POST['password']
+                    password=request.POST['password'],
+                    token=token
                     )
         user.save()
-        return render(request=request, template_name='rais/login.html')
+
+        response = render(request=request, template_name='rais/login.html')
+        # Устанавливаем куку с токеном в браузере пользователя
+        response.set_cookie('token',
+                            value=token,
+                            expires=datetime.datetime.utcnow() + datetime.timedelta(days=30))
+
+        return response
 
     # Если зарегистрированный пользователь осуществляет вход
     elif len(request.POST) == 2:
@@ -56,7 +89,11 @@ def login(request):
         else:
             # Если пароль введён верно
             if user.password == request.POST['password']:
-                return render(request=request, template_name='rais/login.html')
+                response = render(request=request, template_name='rais/login.html')
+                response.set_cookie('token',
+                                    value=user.token,
+                                    expires=datetime.datetime.utcnow() + datetime.timedelta(days=30))
+                return response
             else:
                 return render(request=request, template_name='rais/home.html')
     else:
