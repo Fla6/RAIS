@@ -13,13 +13,47 @@ import base64
 
 @csrf_exempt
 def index(request):
-    print('index')
-    return render(request=request, template_name='rais/home.html')
+    if 'token' in request.COOKIES:
+
+        if len(request.COOKIES['token']) != 0:
+            user = None
+            try:
+                user = User.objects.get(token=request.COOKIES['token'])
+            except User.DoesNotExist:
+                return render(request=request, template_name='rais/home_logout.html')
+            else:
+                return render(request=request, template_name='rais/home_login.html')
+
+        else:
+            return render(request=request, template_name='rais/home_logout.html')
+
+    else:
+        return render(request=request, template_name='rais/home_logout.html')
+
+
+def home_logout(request):
+    response = render(request=request, template_name='rais/home_logout.html')
+    response.set_cookie('token', '')
+    return response
 
 
 def aboutus(request):
-    print(request.COOKIES['token'])
-    return render(request=request, template_name='rais/aboutus.html')
+    if 'token' in request.COOKIES:
+
+        if len(request.COOKIES['token']) != 0:
+            user = None
+            try:
+                user = User.objects.get(token=request.COOKIES['token'])
+            except User.DoesNotExist:
+                return render(request=request, template_name='rais/aboutus_logout.html')
+            else:
+                return render(request=request, template_name='rais/aboutus_login.html')
+
+        else:
+            return render(request=request, template_name='rais/aboutus_logout.html')
+
+    else:
+        return render(request=request, template_name='rais/aboutus_logout.html')
 
 
 def home1(request):
@@ -27,26 +61,31 @@ def home1(request):
 
 
 def profile(request):
-    if len(request.COOKIES['token']) != 0:
-        user = None
-        try:
-            user = User.objects.get(token=request.COOKIES['token'])
-        except User.DoesNotExist:
-            render(request=request, template_name='rais/login.html')
-        else:
-            context = {
-                'name': user.name + ' ' + user.surname,
-                'birthdate': user.birthdate,
-                'town': user.town,
-                'country': user.country,
-                'phone': user.phone,
-                'email': user.email
-            }
+    if 'token' in request.COOKIES:
 
-            return render(request=request, context=context, template_name='rais/profile.html')
+        if len(request.COOKIES['token']) != 0:
+            user = None
+            try:
+                user = User.objects.get(token=request.COOKIES['token'])
+            except User.DoesNotExist:
+                return render(request=request, template_name='rais/home_logout.html')
+            else:
+                context = {
+                    'name': user.name + ' ' + user.surname,
+                    'birthdate': user.birthdate,
+                    'town': user.town,
+                    'country': user.country,
+                    'phone': user.phone,
+                    'email': user.email
+                }
+
+                return render(request=request, context=context, template_name='rais/profile_login.html')
+
+        else:
+            return render(request=request, template_name='rais/home_logout.html')
 
     else:
-        render(request=request, template_name='rais/login.html')
+        return render(request=request, template_name='rais/home_logout.html')
 
 
 @csrf_exempt
@@ -70,7 +109,7 @@ def login(request):
                     )
         user.save()
 
-        response = render(request=request, template_name='rais/login.html')
+        response = render(request=request, template_name='rais/home_login.html')
         # Устанавливаем куку с токеном в браузере пользователя
         response.set_cookie('token',
                             value=token,
@@ -85,22 +124,37 @@ def login(request):
             user = User.objects.get(email=request.POST['email'])
         # Если пользователя с такой почтой не существует
         except User.DoesNotExist:
-            return render(request=request, template_name='rais/home.html')
+            return render(request=request, template_name='rais/home_logout.html')
         else:
             # Если пароль введён верно
             if user.password == request.POST['password']:
-                response = render(request=request, template_name='rais/login.html')
+                response = render(request=request, template_name='rais/home_login.html')
                 response.set_cookie('token',
                                     value=user.token,
                                     expires=datetime.datetime.utcnow() + datetime.timedelta(days=30))
                 return response
             else:
-                return render(request=request, template_name='rais/home.html')
+                return render(request=request, template_name='rais/home_logout.html')
     else:
-        return render(request=request, template_name='rais/home.html')
+        return render(request=request, template_name='rais/home_logout.html')
 
 def whatsinyourmind(request):
-    return render(request=request, template_name='rais/whats-in-your-mind.html')
+    if 'token' in request.COOKIES:
+
+        if len(request.COOKIES['token']) != 0:
+            user = None
+            try:
+                user = User.objects.get(token=request.COOKIES['token'])
+            except User.DoesNotExist:
+                return render(request=request, template_name='rais/login.html')
+            else:
+                return render(request=request, template_name='rais/whats-in-your-mind-login.html')
+
+        else:
+            return render(request=request, template_name='rais/login.html')
+
+    else:
+        return render(request=request, template_name='rais/whats-in-your-mind-logout.html')
 
 
 def post(request):
