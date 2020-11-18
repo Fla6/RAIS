@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-from rais.models import User
+from rais.models import User, Post
 import datetime
 import os
 import base64
@@ -118,7 +118,7 @@ def login(request):
         return response
 
     # Если зарегистрированный пользователь осуществляет вход
-    elif len(request.POST) == 2:
+    elif len(request.POST) in [2, 3]:
         user = None
         try:
             user = User.objects.get(email=request.POST['email'])
@@ -129,9 +129,17 @@ def login(request):
             # Если пароль введён верно
             if user.password == request.POST['password']:
                 response = render(request=request, template_name='rais/home_login.html')
-                response.set_cookie('token',
-                                    value=user.token,
-                                    expires=datetime.datetime.utcnow() + datetime.timedelta(days=30))
+
+                if 'remember' in request.POST:
+                    if request.POST['remember'] == 'on':
+                        response.set_cookie('token',
+                                            value=user.token,
+                                            expires=datetime.datetime.utcnow() + datetime.timedelta(days=30))
+                    else:
+                        response.set_cookie('token', value=user.token)
+                else:
+                    response.set_cookie('token', value=user.token)
+
                 return response
             else:
                 return render(request=request, template_name='rais/home_logout.html')
@@ -158,7 +166,30 @@ def whatsinyourmind(request):
 
 
 def post(request):
-    return render(request=request, template_name='rais/post.html')
+    if 'token' in request.COOKIES:
+
+        if len(request.COOKIES['token']) != 0:
+            user = None
+            try:
+                user = User.objects.get(token=request.COOKIES['token'])
+            except User.DoesNotExist:
+                return render(request=request, template_name='rais/home_logout.html')
+            else:
+                if 'editor1' in request.GET:
+                    if len(request.GET['editor1']) > 0:
+                        new_post = Post()
+                        new_post.author = user
+                        new_post.text = request.GET['editor1']
+                        new_post.save()
+                        return render(request=request, template_name='rais/post.html')
+                    else:
+                        return render(request=request, template_name='rais/post.html')
+                else:
+                    return render(request=request, template_name='rais/post.html')
+        else:
+            return render(request=request, template_name='rais/home_logout.html')
+    else:
+        return render(request=request, template_name='rais/home_logout.html')
 
 
 def edit(request):

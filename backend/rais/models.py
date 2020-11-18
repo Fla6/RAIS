@@ -14,3 +14,8 @@ class User(models.Model):
     email = models.CharField(max_length=100, primary_key=True)
     password = models.CharField(max_length=100)
     token = models.CharField(max_length=500)
+
+
+class Post(models.Model):
+    author = models.ForeignKey('User', on_delete=models.CASCADE)
+    text = models.CharField(max_length=10000)
