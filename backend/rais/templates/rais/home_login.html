@@ -60,34 +60,20 @@
                 <h6>Posts
                     <button id="crt-btn" type="submit" onclick="document.location='{% url 'post' %}'">Create post</button>
                 </h6>
-                
-                <article class="post-4 post type-post status-publish format-standart category-blog-post entry" 
-                 aria-label="What's In Your Mind?" itemscope itemtype="https://schema.org/CreativeWork">
-                    <header class="entry-header">
-                        <h2 class="entry-title" itemprop="headline">
-                            <a class="entry-title-link" rel="bookmark" href="{% url 'whats-in-your-mind' %}">What's In Your Mind?</a>
-                        </h2>
-                    </header>
-                    <div class="featured-wrap"></div>
-                    <div class="entry-content" itemprop="text">
-                        <p> 
-                            Do you ever feel like when someone asks what’s on your mind, you can’t give an answer? 
-                            Not because you don’t want to, but because there is just so much? I’ve been struggling 
-                            writing this post (this is the fourth rewrite!) because there is so much happening not 
-                            only in my life, but in the world. The women representing Peru in the Miss Universe 
-                            competition citing facts about crimes against women in Peru instead of their measurements, 
-                            France placing a ban on underweight models, multiple shootings this week alone, sexual 
-                            harassment cases emerging in Hollywood at a rapid pace, Disney’s first gay storyline in 
-                            popular television series Andi Mack; it can be really overwhelming just opening a web 
-                            browser. How could I pick just one topic to write about?
-                            <a href="{% url 'whats-in-your-mind' %}">Read More</a>
-                        </p>
-                        <div class="author-block">
-                            <p>Kyra O'Connor <a href="#">June 2019</a></p>
-                        </div>
-
-                    </div>
-                </article>
+                <style>
+                    hr {
+                        border: none;
+                        background-color: black;
+                        color: black;
+                        height: 2px;
+                    }
+                </style>
+                {% autoescape off %}
+                    {% for post in posts %}
+                        <div>{{ post.text }}</div>
+                        <hr>
+                    {% endfor %}
+                {% endautoescape %}
             </div>
             <div id="tags" class="col-2">
                 <div class="row">

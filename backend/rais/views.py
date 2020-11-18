@@ -13,6 +13,7 @@ import base64
 
 @csrf_exempt
 def index(request):
+    posts = reversed(Post.objects.all())
     if 'token' in request.COOKIES:
 
         if len(request.COOKIES['token']) != 0:
@@ -20,19 +21,20 @@ def index(request):
             try:
                 user = User.objects.get(token=request.COOKIES['token'])
             except User.DoesNotExist:
-                return render(request=request, template_name='rais/home_logout.html')
+                return render(request=request, context={'posts': posts}, template_name='rais/home_logout.html')
             else:
-                return render(request=request, template_name='rais/home_login.html')
+                return render(request=request, context={'posts': posts}, template_name='rais/home_login.html')
 
         else:
-            return render(request=request, template_name='rais/home_logout.html')
+            return render(request=request, context={'posts': posts}, template_name='rais/home_logout.html')
 
     else:
-        return render(request=request, template_name='rais/home_logout.html')
+        return render(request=request, context={'posts': posts}, template_name='rais/home_logout.html')
 
 
 def home_logout(request):
-    response = render(request=request, template_name='rais/home_logout.html')
+    posts = reversed(Post.objects.all())
+    response = render(request=request, context={'posts': posts}, template_name='rais/home_logout.html')
     response.set_cookie('token', '')
     return response
 
