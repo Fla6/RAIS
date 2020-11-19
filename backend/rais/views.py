@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from rais.models import User, Post
-from rais.pages import HomePage, PostPage
+from rais.pages import HomePage, PostPage, AboutUsPage
 from rais.authentification import authenticate_user_token, authenticate_user_password
 import datetime
 import os
@@ -30,22 +30,11 @@ def home_logout(request):
 
 
 def aboutus(request):
-    if 'token' in request.COOKIES:
-
-        if len(request.COOKIES['token']) != 0:
-            user = None
-            try:
-                user = User.objects.get(token=request.COOKIES['token'])
-            except User.DoesNotExist:
-                return render(request=request, template_name='rais/aboutus_logout.html')
-            else:
-                return render(request=request, template_name='rais/aboutus_login.html')
-
-        else:
-            return render(request=request, template_name='rais/aboutus_logout.html')
-
+    about_us_page = AboutUsPage(request)
+    if authenticate_user_token(request):
+        return about_us_page.get_login_page()
     else:
-        return render(request=request, template_name='rais/aboutus_logout.html')
+        return about_us_page.get_logout_page()
 
 
 def home1(request):

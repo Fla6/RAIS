@@ -26,3 +26,17 @@ class PostPage:
 
     def get_page(self):
         return render(request=self._request, template_name=self._path)
+
+
+class AboutUsPage:
+    _logout_path = 'rais/aboutus_logout.html'
+    _login_path = 'rais/aboutus_login.html'
+
+    def __init__(self, request):
+        self._request = request
+
+    def get_login_page(self):
+        return render(request=self._request, template_name=self._login_path)
+
+    def get_logout_page(self):
+        return render(request=self._request, template_name=self._logout_path)
