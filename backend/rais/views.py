@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from rais.models import User, Post
+from rais.pages import HomePage, PostPage
+from rais.authentification import authenticate_user_token, authenticate_user_password
 import datetime
 import os
 import base64
@@ -13,28 +15,16 @@ import base64
 
 @csrf_exempt
 def index(request):
-    posts = reversed(Post.objects.all())
-    if 'token' in request.COOKIES:
-
-        if len(request.COOKIES['token']) != 0:
-            user = None
-            try:
-                user = User.objects.get(token=request.COOKIES['token'])
-            except User.DoesNotExist:
-                return render(request=request, context={'posts': posts}, template_name='rais/home_logout.html')
-            else:
-                return render(request=request, context={'posts': posts}, template_name='rais/home_login.html')
-
-        else:
-            return render(request=request, context={'posts': posts}, template_name='rais/home_logout.html')
-
+    homepage = HomePage(request)
+    if authenticate_user_token(request):
+        return homepage.get_login_page()
     else:
-        return render(request=request, context={'posts': posts}, template_name='rais/home_logout.html')
+        return homepage.get_logout_page()
 
 
 def home_logout(request):
-    posts = reversed(Post.objects.all())
-    response = render(request=request, context={'posts': posts}, template_name='rais/home_logout.html')
+    homepage = HomePage(request)
+    response = homepage.get_logout_page()
     response.set_cookie('token', '')
     return response
 
@@ -92,6 +82,8 @@ def profile(request):
 
 @csrf_exempt
 def login(request):
+    homepage = HomePage(request)
+
     # Если регистрируется новый пользователь
     if len(request.POST) == 10:
 
@@ -111,7 +103,7 @@ def login(request):
                     )
         user.save()
 
-        response = render(request=request, template_name='rais/home_login.html')
+        response = homepage.get_login_page()
         # Устанавливаем куку с токеном в браузере пользователя
         response.set_cookie('token',
                             value=token,
@@ -121,32 +113,26 @@ def login(request):
 
     # Если зарегистрированный пользователь осуществляет вход
     elif len(request.POST) in [2, 3]:
-        user = None
-        try:
+        if authenticate_user_password(request):
+            response = homepage.get_login_page()
             user = User.objects.get(email=request.POST['email'])
-        # Если пользователя с такой почтой не существует
-        except User.DoesNotExist:
-            return render(request=request, template_name='rais/home_logout.html')
-        else:
-            # Если пароль введён верно
-            if user.password == request.POST['password']:
-                response = render(request=request, template_name='rais/home_login.html')
 
-                if 'remember' in request.POST:
-                    if request.POST['remember'] == 'on':
-                        response.set_cookie('token',
-                                            value=user.token,
-                                            expires=datetime.datetime.utcnow() + datetime.timedelta(days=30))
-                    else:
-                        response.set_cookie('token', value=user.token)
-                else:
-                    response.set_cookie('token', value=user.token)
-
-                return response
+            if 'remember' in request.POST and request.POST['remember'] == 'on':
+                response.set_cookie('token',
+                                    value=user.token,
+                                    expires=datetime.datetime.utcnow() + datetime.timedelta(days=30))
             else:
-                return render(request=request, template_name='rais/home_logout.html')
+                response.set_cookie('token', value=user.token)
+            return response
+
+        # Если пользователь не прошёл аутентификацию
+        else:
+            return homepage.get_logout_page()
+
+    # Если поступил неизвестный запрос
     else:
-        return render(request=request, template_name='rais/home_logout.html')
+        return homepage.get_logout_page()
+
 
 def whatsinyourmind(request):
     if 'token' in request.COOKIES:
@@ -168,30 +154,23 @@ def whatsinyourmind(request):
 
 
 def post(request):
-    if 'token' in request.COOKIES:
+    homepage = HomePage(request)
+    postpage = PostPage(request)
 
-        if len(request.COOKIES['token']) != 0:
-            user = None
-            try:
-                user = User.objects.get(token=request.COOKIES['token'])
-            except User.DoesNotExist:
-                return render(request=request, template_name='rais/home_logout.html')
-            else:
-                if 'editor1' in request.GET:
-                    if len(request.GET['editor1']) > 0:
-                        new_post = Post()
-                        new_post.author = user
-                        new_post.text = request.GET['editor1']
-                        new_post.save()
-                        return render(request=request, template_name='rais/post.html')
-                    else:
-                        return render(request=request, template_name='rais/post.html')
-                else:
-                    return render(request=request, template_name='rais/post.html')
-        else:
-            return render(request=request, template_name='rais/home_logout.html')
+    if authenticate_user_token(request):
+        if 'editor1' in request.GET and len(request.GET['editor1']) > 0:
+            user = User.objects.get(token=request.COOKIES['token'])
+
+            new_post = Post()
+            new_post.author = user
+            new_post.text = request.GET['editor1']
+            new_post.save()
+
+        return postpage.get_page()
+
+    # Если пользователь не прошёл аутентификацию
     else:
-        return render(request=request, template_name='rais/home_logout.html')
+        return homepage.get_logout_page()
 
 
 def edit(request):
