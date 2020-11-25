@@ -79,12 +79,16 @@ def login(request):
         # Генерируем уникальный токен пользователя
         token = base64.b64encode(os.urandom(256)).decode('utf-8')
 
+        birthdate = None
+        if request.POST['birthdate'] != '':
+            birthdate = datetime.datetime.strptime(request.POST['birthdate'], '%Y-%m-%d').date()
+        
         user = User(name=request.POST['name'],
                     surname=request.POST['surname'],
                     username=request.POST['username'],
                     country=request.POST['country'],
                     town=request.POST['town'],
-                    birthdate=datetime.datetime.strptime(request.POST['birthdate'], '%Y-%m-%d').date(),
+                    birthdate=birthdate,
                     phone=request.POST['phone'],
                     email=request.POST['email'],
                     password=request.POST['password'],

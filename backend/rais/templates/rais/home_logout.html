@@ -219,6 +219,7 @@
                 {% autoescape off %}
                     {% for post in posts %}
                         <div>{{ post.text }}</div>
+                        <div>Author: {{post.author.username}}</div>
                         <hr>
                     {% endfor %}
                 {% endautoescape %}
