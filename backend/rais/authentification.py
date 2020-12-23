@@ -26,7 +26,7 @@ def authenticate_user_password(request):
         return False
     else:
         # Если пароль введён верно
-        if user.password == request.POST['password']:
+        if user.password == hash(request.POST['password']):
             return True
         else:
             return False
