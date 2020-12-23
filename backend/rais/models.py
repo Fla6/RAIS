@@ -11,8 +11,8 @@ class User(models.Model):
     town = models.CharField(max_length=30, null=True)
     birthdate = models.DateField(null=True)
     phone = models.CharField(max_length=12, null=True)
-    email = models.CharField(max_length=100, primary_key=True)
-    password = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    password = models.BigIntegerField()
     token = models.CharField(max_length=500)
 
 

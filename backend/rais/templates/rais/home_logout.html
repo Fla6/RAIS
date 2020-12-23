@@ -36,10 +36,10 @@
                             <a href="{% url 'aboutus' %}" class="nav-link">About us</a>
                         </li>
                     </ul>
-                    <form class="from-inline my-2 my-lg-0">
-                        <input type="text" class="from-control mr-sm-2" placeholder="Search"
+                    <form class="from-inline my-2 my-lg-0" method="POST" action="{% url 'search' %}">
+                        <input name="request" type="text" class="from-control mr-sm-2" placeholder="Search"
                         aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
                     </form>
                 </div>
             </div>

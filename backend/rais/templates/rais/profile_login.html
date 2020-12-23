@@ -40,10 +40,10 @@
                             <a href="{% url 'profile' %}" class="nav-link">Profile <img src="{% static "rais/avatar.png" %}" alt="avatar" class="rounded-circle img-responsive"></a>
                         </li>
                     </ul>
-                    <form class="from-inline my-2 my-lg-0">
-                        <input type="text" class="from-control mr-sm-2" placeholder="Search"
+                    <form class="from-inline my-2 my-lg-0" method="POST" action="{% url 'search' %}">
+                        <input name="request" type="text" class="from-control mr-sm-2" placeholder="Search"
                         aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
                     </form>
                 </div>
             </div>
@@ -126,17 +126,34 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-describedby="profile-tab">
-                                <div class="row">
-                                    <div class="col-8" id="name-post">
-                                        <!-- <a href="whats-in-your-mind.html">Whats In Your Mind?</a> -->
-                                        <label>Whats In Your Mind?</label>
-                                    </div>
-                                    <div class="col-4" id="btn">
-                                        <button type="submit" id="btn-prof" onclick="document.location='{% url 'edit' %}'">Edit post</button>
-                                        <button type="submit" id="btn-prof" class="btn btn-primary">Delete post</button>
-                                    </div>
-                                    <div class="w-100"></div>
-                                </div>
+                                {% autoescape off %}
+                                    {% for post in posts %}
+                                        <form class="row" method="POST", action="{% url 'delete_post' %}">
+                                            <style>
+                                                hr {
+                                                    border: none;
+                                                    background-color: black;
+                                                    color: black;
+                                                    height: 2px;
+                                                }
+                                            </style>
+
+                                            <div>
+                                                <input name="post_id" value="{{ post.id }}" type="number" hidden >
+                                            </div>
+                                            <div>
+                                                {{ post.text }}
+                                            </div>
+                                            <hr>
+
+                                            <div class="col-4" id="btn">
+                                                <!--<button type="submit" id="btn-prof" onclick="document.location='{% url 'edit_post' %}'" class="btn btn-primary">Edit post</button> -->
+                                                <button type="submit" id="btn-prof" onclick="document.location='{% url 'delete_post' %}'" class="btn btn-primary">Delete post</button>
+                                            </div>
+                                            <div class="w-100"></div>
+                                        </form>
+                                    {% endfor %}
+                                {% endautoescape %}
                             </div>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from rais.models import User, Post
-from rais.pages import HomePage, PostPage, AboutUsPage
+from rais.pages import HomePage, PostPage, AboutUsPage, SearchResultsPage, ProfilePage
 from rais.authentification import authenticate_user_token, authenticate_user_password
 import datetime
 import os
@@ -42,31 +42,14 @@ def home1(request):
 
 
 def profile(request):
-    if 'token' in request.COOKIES:
+    homepage = HomePage(request)
+    profile_page = ProfilePage(request)
 
-        if len(request.COOKIES['token']) != 0:
-            user = None
-            try:
-                user = User.objects.get(token=request.COOKIES['token'])
-            except User.DoesNotExist:
-                return render(request=request, template_name='rais/home_logout.html')
-            else:
-                context = {
-                    'name': user.name + ' ' + user.surname,
-                    'birthdate': user.birthdate,
-                    'town': user.town,
-                    'country': user.country,
-                    'phone': user.phone,
-                    'email': user.email
-                }
-
-                return render(request=request, context=context, template_name='rais/profile_login.html')
-
-        else:
-            return render(request=request, template_name='rais/home_logout.html')
-
+    if authenticate_user_token(request):
+        return profile_page.get_page()
     else:
-        return render(request=request, template_name='rais/home_logout.html')
+        return homepage.get_logout_page()
+
 
 
 @csrf_exempt
@@ -91,7 +74,7 @@ def login(request):
                     birthdate=birthdate,
                     phone=request.POST['phone'],
                     email=request.POST['email'],
-                    password=request.POST['password'],
+                    password=hash(request.POST['password']),
                     token=token
                     )
         user.save()
@@ -166,5 +149,28 @@ def post(request):
         return homepage.get_logout_page()
 
 
-def edit(request):
-    return render(request=request, template_name='rais/edit.html')
+@csrf_exempt
+def edit_post(request):
+    return render(request=request, template_name='rais/post.html')
+
+
+@csrf_exempt
+def delete_post(request):
+    homepage = HomePage(request)
+    profile_page = ProfilePage(request)
+
+    Post.objects.filter(id=int(request.POST['post_id'])).delete()
+
+    if authenticate_user_token(request):
+        return profile_page.get_page()
+    else:
+        return homepage.get_logout_page()
+
+
+@csrf_exempt
+def search(request):
+    results_page = SearchResultsPage(request)
+    if authenticate_user_token(request):
+        return results_page.get_login_page()
+    else:
+        return results_page.get_logout_page()
