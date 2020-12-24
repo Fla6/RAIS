@@ -8,6 +8,7 @@ from rais.authentification import authenticate_user_token, authenticate_user_pas
 import datetime
 import os
 import base64
+import hashlib
 
 
 # Create your views here.
@@ -74,7 +75,7 @@ def login(request):
                     birthdate=birthdate,
                     phone=request.POST['phone'],
                     email=request.POST['email'],
-                    password=hash(request.POST['password']),
+                    password=hashlib.sha256(request.POST['password'].encode('utf-8')).digest(),
                     token=token
                     )
         user.save()
@@ -140,6 +141,7 @@ def post(request):
             new_post = Post()
             new_post.author = user
             new_post.text = request.GET['editor1']
+            new_post.publication_date = datetime.datetime.now()
             new_post.save()
 
         return postpage.get_page()

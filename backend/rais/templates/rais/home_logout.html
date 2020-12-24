@@ -210,7 +210,7 @@
                 {% autoescape off %}
                     {% for post in posts %}
                         <div>{{ post.text }}</div>
-                        <div>Author: {{post.author.username}}</div>
+                        <div>{{post.author.username}}, {{post.publication_date}}</div>
                         <hr>
                     {% endfor %}
                 {% endautoescape %}

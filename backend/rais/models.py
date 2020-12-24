@@ -12,10 +12,11 @@ class User(models.Model):
     birthdate = models.DateField(null=True)
     phone = models.CharField(max_length=12, null=True)
     email = models.CharField(max_length=100)
-    password = models.BigIntegerField()
+    password = models.BinaryField(max_length=32)
     token = models.CharField(max_length=500)
 
 
 class Post(models.Model):
     author = models.ForeignKey('User', on_delete=models.CASCADE)
     text = models.CharField(max_length=10000)
+    publication_date = models.DateTimeField()

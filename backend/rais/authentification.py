@@ -1,4 +1,5 @@
 from rais.models import User, Post
+import hashlib
 
 
 def authenticate_user_token(request):
@@ -26,8 +27,8 @@ def authenticate_user_password(request):
         return False
     else:
         # Если пароль введён верно
-        print(hash(request.POST['password']))
-        if user.password == hash(request.POST['password']):
+        print(hashlib.sha256(request.POST['password'].encode('utf-8')).digest())
+        if user.password == hashlib.sha256(request.POST['password'].encode('utf-8')).digest():
             return True
         else:
             return False
