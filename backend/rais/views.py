@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from rais.models import User, Post
-from rais.pages import HomePage, PostPage, AboutUsPage, SearchResultsPage, ProfilePage
+from rais.pages import HomePage, PostPage, AboutUsPage, SearchResultsPage, ProfilePage, EditProfilePage
 from rais.authentification import authenticate_user_token, authenticate_user_password
 import datetime
 import os
@@ -174,3 +174,43 @@ def search(request):
         return results_page.get_login_page()
     else:
         return results_page.get_logout_page()
+
+
+@csrf_exempt
+def editprofile(request):
+    profile_page = ProfilePage(request)
+    edit_profile_page = EditProfilePage(request)
+    homepage = HomePage(request)
+
+    if request.method == 'GET':
+        if authenticate_user_token(request):
+            return edit_profile_page.get_page()
+        else:
+            return homepage.get_logout_page()
+
+    elif request.method == 'POST':
+        if authenticate_user_token(request):
+
+            user = User.objects.get(token=request.COOKIES['token'])
+
+            user.name = request.POST['name']
+            user.surname = request.POST['surname']
+            user.username = request.POST['username']
+            user.birthdate = datetime.datetime.strptime(request.POST['birthdate'], '%Y-%m-%d').date()
+            user.town = request.POST['town']
+            user.country = request.POST['country']
+            user.phone = request.POST['phone']
+            user.email = request.POST['email']
+
+            user.save()
+
+            return profile_page.get_page()
+
+        else:
+            return homepage.get_logout_page()
+
+
+
+
+
+

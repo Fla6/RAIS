@@ -14,6 +14,6 @@ urlpatterns = [
     path('deletepost/', views.delete_post, name='delete_post'),
     path('home_logout/', views.home_logout, name='home_logout'),
     path('search/', views.search, name='search'),
-
+    path('editprofile/', views.editprofile, name='editprofile'),
 ]
 

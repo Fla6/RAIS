@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rais.models import User, Post
+import datetime
 
 
 class HomePage:
@@ -26,6 +27,28 @@ class PostPage:
 
     def get_page(self):
         return render(request=self._request, template_name=self._path)
+
+
+class EditProfilePage:
+    _path = 'rais/editprofile.html'
+
+    def __init__(self, request):
+        self._request = request
+
+    def get_page(self):
+        user = User.objects.get(token=self._request.COOKIES['token'])
+        context = {
+            'name': user.name,
+            'surname': user.surname,
+            'username': user.username,
+            'birthdate': datetime.datetime.strftime(user.birthdate, '%Y-%m-%d'),
+            'town': user.town,
+            'country': user.country,
+            'phone': user.phone,
+            'email': user.email
+        }
+
+        return render(request=self._request, context=context, template_name=self._path)
 
 
 class AboutUsPage:
@@ -77,6 +100,7 @@ class ProfilePage:
         posts = reversed(Post.objects.filter(author=user))
         context = {
             'name': user.name + ' ' + user.surname,
+            'username': user.username,
             'birthdate': user.birthdate,
             'town': user.town,
             'country': user.country,

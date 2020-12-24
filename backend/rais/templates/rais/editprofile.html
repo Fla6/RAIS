@@ -6,10 +6,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="icon" href="{% static "rais/d6292e70f0024fab785dc8c0e6e94ac8.png" %}" type="image/xicon">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static "rais/style.css" %}">
+    <link rel="stylesheet" href="{% static "rais/style.css" %}" >
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <style>
+        #name {
+            margin-top: 20px;
+            text-align: center;
+            padding: 0px 20px 0px 20px;
+        }
+        #prof {
+            width: 500px;
+            margin-top: 100px;
+        }   
+        .editprof {
+            list-style-type: none;
+            padding: 5px 0px 0px 25px;
+        }
+        .editprof > li {
+            display: flex;
+            justify-content: flex-end;
+            padding-bottom: 15px;
+        }
+        .editprof > li > label {
+            flex: 2;
+            padding: 7px 20px 0px 0px;
+        }
+        .editprof > li > input {
+            flex: 2;
+            
+        }
+        .editprof > li > button {
+            flex: auto;
+        }
+        #info {
+            text-align: left;
+            /* padding-left: 80px; */
+            padding-top: 15px;
+        }
+        .profile-edit-btn {
+            border-radius: 20px;
+            margin: 10px 0px 0px 0px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header id="ver" class="navbar navbar-default container-fluid nav justify-content-center">RaisBlog</header>
@@ -28,16 +70,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a href="{% url 'index' %}" class="nav-link">Home</a>
+                            <a href="{% url 'home' %}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'index' %}" class="nav-link">Log out</a>
+                            <a href="{% url 'home_logout' %}" class="nav-link">Log out</a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'aboutus' %}" class="nav-link">About us</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Profile <img src="{% static "rais/avatar.png" %}" alt="avatar" class="rounded-circle img-responsive"></a>
+                            <a href="{% url 'profile' %}" class="nav-link">Profile <img src="{% static "rais/avatar.png" %}" alt="avatar" class="rounded-circle img-responsive"></a>
                         </li>
                     </ul>
                     <form class="from-inline my-2 my-lg-0" method="POST" action="{% url 'search' %}">
@@ -55,15 +97,12 @@
     <section role="main" class="container">
         <div class="row" style="min-height: 750px;">
             <div id="blog" class="col-10">
-                <div id="frm" >
+                <div>
                     <div class="container" id="prof">
                         <div class="row">
-                            <div class="col-9" id="name">
+                            <div class="col" id="name">
                                 <div class="profile-head">
-                                    <h5>
-                                        Username
-                                    </h5>
-                                    
+                                    <h5>Username</h5>
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -74,55 +113,49 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-3" id="phot">
-                                <button type="submit" class="profile-edit-btn" >Edit Profile</button>
-                                <!-- <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/> -->
-                            </div>
                         </div>
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="row" id="info">
-                                    <div class="col">
-                                        <label>Name</label>
-                                    </div>
-                                    <div class="col">
-                                        <p>{{ name }}</p>
-                                    </div>
-                                    <div class="w-100"></div>
-                                    <div class="col">
-                                        <label>Date of Birth</label>
-                                    </div>
-                                    <div class="col">
-                                        <p>{{ birthdate }}</p>
-                                    </div>
-                                    <div class="w-100"></div>
-                                    <div class="col">
-                                        <label>Country</label>
-                                    </div>
-                                    <div class="col">
-                                        <p>{{ country }}</p>
-                                    </div>
-                                    <div class="w-100"></div>
-                                    <div class="col">
-                                        <label>Town</label>
-                                    </div>
-                                    <div class="col">
-                                        <p>{{ town }}</p>
-                                    </div>
-                                    <div class="w-100"></div>
-                                    <div class="col">
-                                        <label>Phone</label>
-                                    </div>
-                                    <div class="col">
-                                        <p>{{ phone }}</p>
-                                    </div>
-                                    <div class="w-100"></div>
-                                    <div class="col">
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col">
-                                        <p>{{ email }}</p>
-                                    </div>
+                                    <form action="{% url 'editprofile' %}" class="col" method="POST">
+                                        <ul class="editprof">
+                                            <li>
+                                                <label for="names">Name </label>
+                                                <input name="name" type="text" id="names" value="{{ name }}">
+                                            </li>
+                                            <li>
+                                                <label for="surname">Surname </label>
+                                                <input name="surname" type="text" id="surname" value="{{ surname }}">
+                                            </li>
+                                            <li>
+                                                <label for="username">Username </label>
+                                                <input name="username" type="text" id="username" value="{{ username }}">
+                                            </li>
+                                            <li>
+                                                <label for="dateofbirth">Date of Birth </label>
+                                                <input name="birthdate" type="date" id="dateofbirth" value="{{ birthdate }}">
+                                            </li>
+                                            <li>
+                                                <label for="country">Country </label>
+                                                <input name="country" type="text" id="country" value="{{ country }}">
+                                            </li>
+                                            <li>
+                                                <label for="town">Town </label>
+                                                <input name="town" type="text" id="town" value="{{ town }}">
+                                            </li>
+                                            <li>
+                                                <label for="phone">Phone </label>
+                                                <input name="phone" type="text" id="phone" value="{{ phone }}">
+                                            </li>
+                                            <li>
+                                                <label for="email">Email </label>
+                                                <input name="email" type="email" id="email" value="{{ email }}">
+                                            </li>
+                                            <li>
+                                                <button type="submit" class="profile-edit-btn btn btn-light btn-sm" >Change</button>
+                                            </li>
+                                        </ul>
+                                    </form>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-describedby="profile-tab">
@@ -168,7 +201,7 @@
                     <div class="w-100"></div>
                     <div class="col" id="tagfot">
                         <h5>Archive</h5>
-                        <a href="#">June 2019</a>
+                        <a href="#">December 2020</a>
                     </div>
                 </div>
             </div>
@@ -176,7 +209,7 @@
     </section>
     
 
-    <footer class="footer fixed-bottom">End</footer>
+    <footer class="footer fixed-bottom">&copy; 2020 TUSUR</footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
