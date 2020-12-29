@@ -130,17 +130,18 @@ def whatsinyourmind(request):
         return render(request=request, template_name='rais/whats-in-your-mind-logout.html')
 
 
+@csrf_exempt
 def post(request):
     homepage = HomePage(request)
     postpage = PostPage(request)
 
     if authenticate_user_token(request):
-        if 'editor1' in request.GET and len(request.GET['editor1']) > 0:
+        if 'editor1' in request.POST and len(request.POST['editor1']) > 0:
             user = User.objects.get(token=request.COOKIES['token'])
 
             new_post = Post()
             new_post.author = user
-            new_post.text = request.GET['editor1']
+            new_post.text = request.POST['editor1']
             new_post.publication_date = datetime.datetime.now()
             new_post.save()
 

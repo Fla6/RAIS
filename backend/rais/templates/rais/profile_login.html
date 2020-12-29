@@ -13,8 +13,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <style>
         #prof {
-            width: 500px;
-            margin-top: 100px;
+            width: 100%;
         }
         #name {
             margin-top: 20px;
@@ -23,7 +22,7 @@
         }
         .info {
             text-align: left;
-            padding: 15px 0px 0px 20px;
+            padding: 15px 150px 0px 150px;
             
         }
         .info > div > p {
@@ -35,7 +34,7 @@
             text-align: center;
         }
         #btn {
-            padding: 10px 10px 0px 0px;
+            padding: 10px 20px 0px 0px;
             text-align: right;
         }
         #name-post {
@@ -53,6 +52,9 @@
             cursor: pointer;
             text-align: center;
             margin-bottom: 20px;
+        }
+        .post {
+            border-bottom: 3px solid black;
         }
     </style>
 </head>
@@ -79,7 +81,7 @@
                             <a href="{% url 'home_logout' %}" class="nav-link">Log out</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'home' %}" class="nav-link">About us</a>
+                            <a href="{% url 'aboutus' %}" class="nav-link">About us</a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'profile' %}" class="nav-link">Profile <img src="{% static "rais/avatar.png" %}" alt="avatar" class="rounded-circle img-responsive"></a>
@@ -173,29 +175,22 @@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-describedby="profile-tab">
                                 {% autoescape off %}
                                     {% for post in posts %}
-                                        <form class="row" method="POST", action="{% url 'delete_post' %}">
-                                            <style>
-                                                hr {
-                                                    border: none;
-                                                    background-color: black;
-                                                    color: black;
-                                                    height: 2px;
-                                                }
-                                            </style>
+                                        <form id="name-post" method="POST", action="{% url 'delete_post' %}">
 
                                             <div>
                                                 <input name="post_id" value="{{ post.id }}" type="number" hidden >
                                             </div>
-                                            <div>
-                                                {{ post.text }}
-                                            </div>
-                                            <hr>
+                                            <div class="row post">
+                                                <div class="col-10">
+                                                    {{ post.text }}
+                                                </div>
 
-                                            <div class="col-4" id="btn">
-                                                <!--<button type="submit" id="btn-prof" onclick="document.location='{% url 'edit_post' %}'" class="btn btn-primary">Edit post</button> -->
-                                                <button type="submit" id="btn-prof" onclick="document.location='{% url 'delete_post' %}'" class="btn btn-primary">Delete post</button>
+                                                <div class="col-2" id="btn">
+                                                    <!--<button type="submit" id="btn-prof" onclick="document.location='{% url 'edit_post' %}'" class="btn btn-primary">Edit post</button> -->
+                                                    <button type="submit" id="btn-prof" onclick="document.location='{% url 'delete_post' %}'" class="btn btn-primary">Delete post</button>
+                                                </div>
+                                                <div class="w-100"></div>
                                             </div>
-                                            <div class="w-100"></div>
                                         </form>
                                     {% endfor %}
                                 {% endautoescape %}

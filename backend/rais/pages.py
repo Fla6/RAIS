@@ -76,7 +76,7 @@ class SearchResultsPage:
         posts = reversed(Post.objects.all())
         sorted_posts = []
         for post in posts:
-            if self._request.POST['request'] in post.text:
+            if self._request.POST['request'].lower() in post.text.lower():
                 sorted_posts.append(post)
         return render(request=self._request, context={'posts': sorted_posts}, template_name=self._login_path)
 
